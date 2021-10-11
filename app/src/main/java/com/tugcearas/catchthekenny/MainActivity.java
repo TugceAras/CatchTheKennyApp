@@ -3,7 +3,7 @@ package com.tugcearas.catchthekenny;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -62,11 +62,13 @@ public class MainActivity extends AppCompatActivity {
         new CountDownTimer(10000,1000){
 
 
+            @SuppressLint("SetTextI18n")
             @Override
             public void onTick(long millisUntilFinished) {
                 timeText.setText("Time: " + millisUntilFinished/1000);
             }
 
+            @SuppressLint("SetTextI18n")
             @Override
             public void onFinish() {
 
@@ -80,25 +82,15 @@ public class MainActivity extends AppCompatActivity {
                 AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
                 alert.setTitle("Restart Game?");
                 alert.setMessage("Are you sure to restart game?");
-                alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                alert.setPositiveButton("Yes", (dialog, which) -> {
 
-                        // restart
-                        Intent intent = getIntent();
-                        finish();
-                        startActivity(intent);
-                    }
+                    // restart
+                    Intent intent = getIntent();
+                    finish();
+                    startActivity(intent);
                 });
 
-                alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        Toast.makeText(MainActivity.this,"Game Over!",Toast.LENGTH_SHORT).show();
-
-                    }
-                });
+                alert.setNegativeButton("No", (dialog, which) -> Toast.makeText(MainActivity.this,"Game Over!",Toast.LENGTH_SHORT).show());
 
 
                 alert.show();
@@ -133,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @SuppressLint("SetTextI18n")
     public void increaseScore(View view){
 
         score++;
